@@ -23,13 +23,15 @@ date: 2026-10-20
 The post, in Markdown.
 ```
 
-The newest post is featured on the home page; the rest are listed below it.
+The newest post is featured on the home page; the rest are listed below it. The `description` is what Google and link previews show, so make it count. New posts also appear in the feed at `/feed.xml` and in the sitemap automatically.
 
 ## Where things live
 
 | What | Where |
 | --- | --- |
-| Site title, Erik's lines | `src/_data/site.json` |
+| Site title, address (`url`), Erik's lines | `src/_data/site.json` |
+| Sitemap, robots.txt | `src/sitemap.njk`, `src/robots.njk` |
+| Favicon, share image | `src/favicon.ico`, `src/assets/icons/` |
 | Home page | `src/index.njk` |
 | AI page | `src/ai.njk` |
 | Page and post layouts | `src/_includes/` |

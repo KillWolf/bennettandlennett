@@ -4,7 +4,28 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if title %}{{ title }} · {% endif %}{{ site.title }}</title>
-  <meta name="description" content="{{ description or site.description }}">
+  {%- set pageTitle %}{% if title %}{{ title }} · {% endif %}{{ site.title }}{% endset %}
+  {%- set pageDescription = description or site.description %}
+  <meta name="description" content="{{ pageDescription }}">
+  <link rel="canonical" href="{{ page.url | fullUrl }}">
+  <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="{{ site.title }} dev log">
+
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:title" content="{{ pageTitle }}">
+  <meta property="og:description" content="{{ pageDescription }}">
+  <meta property="og:url" content="{{ page.url | fullUrl }}">
+  <meta property="og:image" content="{{ '/assets/icons/share.png' | fullUrl }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Erik, the hero of {{ site.game }}">
+  <meta property="og:locale" content="en_GB">
+  {%- if layout == "post.njk" %}
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="{{ page.date | isoDate }}">
+  {%- else %}
+  <meta property="og:type" content="website">
+  {%- endif %}
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" href="/assets/fonts/vt323-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/assets/icons/favicon-32.png" type="image/png">
