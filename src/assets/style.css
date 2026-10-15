@@ -205,6 +205,7 @@ main { display: flex; flex-direction: column; gap: 40px; }
 .card ul, .rules { margin: 0; padding-left: 24px; }
 .card li, .rules li { margin-bottom: 6px; }
 .rules { max-width: 60ch; }
+.rules em { font-style: normal; text-decoration: underline; text-underline-offset: 4px; }
 
 /* Erik walking down beside the post text */
 .post-layout { position: relative; }
