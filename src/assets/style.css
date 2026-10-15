@@ -237,3 +237,15 @@ main { display: flex; flex-direction: column; gap: 40px; }
   .logo-name { font-size: 34px; }
   .logo-tagline { font-size: 20px; }
 }
+
+/* Small pixel arrow on links that open in a new tab */
+.ext-link { display: inline-flex; align-items: center; }
+.ext-icon { flex: 0 0 auto; width: 0.55em; height: 0.55em; margin-left: 0.3em; transform: translateY(0.07em); }
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

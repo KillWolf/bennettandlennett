@@ -42,6 +42,7 @@
       <nav aria-label="Main">
         <a href="/"{% if page.url == "/" %} aria-current="page"{% endif %}>Look at posts</a>
         <a href="/ai/"{% if page.url == "/ai/" %} aria-current="page"{% endif %}>Ask about AI</a>
+        <a href="{{ site.bluesky }}" class="ext-link" rel="me noopener" target="_blank">Talk to us{% include "icons/external.njk" %}</a>
       </nav>
     </header>
 
@@ -49,7 +50,7 @@
       {{ content | safe }}
     </main>
 
-    <footer class="site-footer">Made in Denmark, with a lot of beer and a little imagination.</footer>
+    <footer class="site-footer">Made in Denmark, with a lot of beer and a little imagination. Follow along on <a href="{{ site.bluesky }}" rel="me noopener" target="_blank">Bluesky<span class="visually-hidden"> (opens in a new tab)</span></a>.</footer>
   </div>
 </body>
 </html>
