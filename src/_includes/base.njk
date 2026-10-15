@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if title %}{{ title }} · {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ description or site.description }}">
+  <link rel="preload" href="/assets/fonts/vt323-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="site-header">
+      <a class="site-title" href="/">{{ site.title }}</a>
+      <nav aria-label="Main">
+        <a href="/"{% if page.url == "/" %} aria-current="page"{% endif %}>Look at posts</a>
+        <a href="/ai/"{% if page.url == "/ai/" %} aria-current="page"{% endif %}>Ask about AI</a>
+      </nav>
+    </header>
+
+    <main>
+      {{ content | safe }}
+    </main>
+
+    <footer class="site-footer">Made in Denmark, mostly with coffee and sea air.</footer>
+  </div>
+</body>
+</html>

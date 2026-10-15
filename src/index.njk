@@ -1,0 +1,53 @@
+---
+layout: base.njk
+---
+{% set posts = collections.posts | reverse %}
+{% set newest = posts[0] %}
+
+<section class="scene" aria-label="Erik">
+  <p class="dialogue">“{{ site.erikLine }}”</p>
+  <img id="erik" class="sprite" src="/assets/erik/erik-idle.png" alt="Erik" width="272" height="464">
+</section>
+
+{% if newest %}
+<section class="newest" aria-label="Newest post">
+  <p class="meta">Newest · <time datetime="{{ newest.date | isoDate }}">{{ newest.date | readableDate }}</time></p>
+  <h1><a href="{{ newest.url }}">{{ newest.data.title }}</a></h1>
+  {% if newest.data.description %}<p class="teaser">{{ newest.data.description }}</p>{% endif %}
+  <a class="action" href="{{ newest.url }}">&gt; Read it</a>
+</section>
+{% endif %}
+
+{% if posts.length > 1 %}
+<section aria-labelledby="older-h">
+  <h2 id="older-h" class="quiet">Older posts</h2>
+  <ul class="post-list">
+    {% for post in posts.slice(1) %}
+    <li>
+      <a href="{{ post.url }}">
+        <time datetime="{{ post.date | isoDate }}">{{ post.date | readableDate }}</time>
+        <span>{{ post.data.title }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+<script>
+  // A new Erik pose on every page load.
+  (function () {
+    var poses = [
+      ["erik-idle.png", 272, 464],
+      ["erik-walk.png", 272, 460],
+      ["erik-talk.png", 272, 464],
+      ["erik-reach-up.png", 348, 536],
+      ["erik-reach.png", 396, 464]
+    ];
+    var pose = poses[Math.floor(Math.random() * poses.length)];
+    var img = document.getElementById("erik");
+    img.src = "/assets/erik/" + pose[0];
+    img.width = pose[1];
+    img.height = pose[2];
+  })();
+</script>
