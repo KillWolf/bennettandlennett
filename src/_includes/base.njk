@@ -3,15 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if title %}{{ title }} · {% endif %}{{ site.title }}</title>
+  {%- if page.url == "/" %}
+  {%- set pageTitle %}{{ site.title }} · {{ site.game }} dev log{% endset %}
+  {%- else %}
   {%- set pageTitle %}{% if title %}{{ title }} · {% endif %}{{ site.title }}{% endset %}
+  {%- endif %}
   {%- set pageDescription = description or site.description %}
+  <title>{{ pageTitle | safe }}</title>
   <meta name="description" content="{{ pageDescription }}">
   <link rel="canonical" href="{{ page.url | fullUrl }}">
   <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="{{ site.title }} dev log">
 
   <meta property="og:site_name" content="{{ site.title }}">
-  <meta property="og:title" content="{{ pageTitle }}">
+  <meta property="og:title" content="{{ pageTitle | safe }}">
   <meta property="og:description" content="{{ pageDescription }}">
   <meta property="og:url" content="{{ page.url | fullUrl }}">
   <meta property="og:image" content="{{ '/assets/icons/share.png' | fullUrl }}">
@@ -26,6 +30,15 @@
   <meta property="og:type" content="website">
   {%- endif %}
   <meta name="twitter:card" content="summary_large_image">
+  {%- if page.url == "/" %}
+  {#- Tells Google the site's name, so results say "Bennett & Lennett" rather than the domain. #}
+  {%- set websiteData = { "@context": "https://schema.org", "@type": "WebSite", "name": site.title, "alternateName": "Bennett and Lennett", "url": "/" | fullUrl } %}
+  <script type="application/ld+json">{{ websiteData | dump | replace("<", "\\u003c") | safe }}</script>
+  {%- endif %}
+  {%- if layout == "post.njk" %}
+  {%- set postData = { "@context": "https://schema.org", "@type": "BlogPosting", "headline": title, "description": pageDescription, "datePublished": page.date | isoDate, "url": page.url | fullUrl, "image": "/assets/icons/share.png" | fullUrl, "inLanguage": "en", "author": { "@type": "Organization", "name": site.title, "url": "/" | fullUrl }, "publisher": { "@type": "Organization", "name": site.title, "url": "/" | fullUrl } } %}
+  <script type="application/ld+json">{{ postData | dump | replace("<", "\\u003c") | safe }}</script>
+  {%- endif %}
   <link rel="preload" href="/assets/fonts/vt323-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/assets/icons/favicon-32.png" sizes="32x32" type="image/png">

@@ -22,7 +22,7 @@ layout: base.njk
   <p class="meta">Newest · <time datetime="{{ newest.date | isoDate }}">{{ newest.date | readableDate }}</time></p>
   <h1><a href="{{ newest.url }}">{{ newest.data.title }}</a></h1>
   {% if newest.data.description %}<p class="teaser">{{ newest.data.description }}</p>{% endif %}
-  <a class="action" href="{{ newest.url }}">&gt; Read it</a>
+  <a class="action" href="{{ newest.url }}">&gt; Read it<span class="visually-hidden">: {{ newest.data.title }}</span></a>
 </section>
 {% endif %}
 
