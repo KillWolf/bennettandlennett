@@ -1,5 +1,6 @@
 export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
+  eleventyConfig.addPassthroughCopy({ "src/favicon.ico": "favicon.ico" });
 
   eleventyConfig.addFilter("readableDate", (date) =>
     new Intl.DateTimeFormat("en-GB", {
