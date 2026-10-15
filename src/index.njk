@@ -113,6 +113,8 @@ layout: base.njk
         var verb = item.getAttribute("data-verb");
         var line = pick(verb);
         says.className = "dialogue" + (verb === "lookAt" ? " is-narration" : "");
+        // Erik speaks Danish; the narration is English.
+        says.lang = verb === "talkTo" ? "da" : "en";
         says.textContent = verb === "talkTo" ? "“" + line + "”" : line;
         close(true);
       });
