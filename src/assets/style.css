@@ -206,18 +206,20 @@ main { display: flex; flex-direction: column; gap: 40px; }
 .card li, .rules li { margin-bottom: 6px; }
 .rules { max-width: 60ch; }
 
-/* Erik walking down the right-hand margin of a post */
+/* Erik walking down beside the post text */
+.post-layout { position: relative; }
 .walker {
   display: none;
-  position: fixed;
+  position: absolute;
   top: 0;
-  /* Centred in the space to the right of the 960px column. */
-  right: calc((100vw - 960px) / 4 - 72px);
+  /* Just right of the 65ch text column. */
+  left: calc(65ch + 40px);
   height: auto;
   image-rendering: pixelated;
   pointer-events: none;
 }
-@media (min-width: 1260px) {
+/* Only where the column has room for him next to the text. */
+@media (min-width: 900px) {
   .walker { display: block; }
 }
 

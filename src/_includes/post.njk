@@ -1,21 +1,23 @@
 ---
 layout: base.njk
 ---
-<article class="post">
-  <header>
-    <p class="meta"><time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time></p>
-    <h1>{{ title }}</h1>
-  </header>
-  {{ content | safe }}
-</article>
+<div class="post-layout" id="post-layout">
+  <article class="post">
+    <header>
+      <p class="meta"><time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time></p>
+      <h1>{{ title }}</h1>
+    </header>
+    {{ content | safe }}
+  </article>
+  <img class="walker" id="walker" src="/assets/erik/walk/front-idle.png" alt="" aria-hidden="true" width="144" height="236">
+</div>
 <p><a class="action" href="/">&lt; Back to all posts</a></p>
 
-<img class="walker" id="walker" src="/assets/erik/walk/front-idle.png" alt="" aria-hidden="true" width="144" height="236">
-
 <script>
-  // Erik walks down the right side as you scroll: towards you going down, away going up.
+  // Erik walks down beside the post as you scroll: towards you going down, away going up.
   (function () {
     var walker = document.getElementById("walker");
+    var layout = document.getElementById("post-layout");
     var base = "/assets/erik/walk/";
     var frames = 8;
     var stride = 45; // pixels scrolled per animation frame
@@ -32,9 +34,13 @@ layout: base.njk
     });
 
     function place() {
+      // Where he'd stand on screen, given how far through the page you are...
       var room = document.documentElement.scrollHeight - window.innerHeight;
       var progress = room > 0 ? window.scrollY / room : 0;
-      var top = 24 + progress * (window.innerHeight - walker.offsetHeight - 48);
+      var onScreen = 24 + progress * (window.innerHeight - walker.offsetHeight - 48);
+      // ...kept within the post, so he never wanders over the header or footer.
+      var top = onScreen - layout.getBoundingClientRect().top;
+      top = Math.max(0, Math.min(top, layout.offsetHeight - walker.offsetHeight));
       walker.style.transform = "translateY(" + Math.round(top) + "px)";
     }
 
