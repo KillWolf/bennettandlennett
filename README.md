@@ -34,7 +34,7 @@ The newest post is featured on the home page; the rest are listed below it.
 | AI page | `src/ai.njk` |
 | Page and post layouts | `src/_includes/` |
 | Styles | `src/assets/style.css` |
-| Erik sprites (from the game) | `src/assets/erik/` |
+| Erik and Charon sprites (from the game) | `src/assets/erik/`, `src/assets/charon/` |
 | Fonts (self-hosted, no Google) | `src/assets/fonts/` |
 
 ## Deploy

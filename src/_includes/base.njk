@@ -11,7 +11,10 @@
 <body>
   <div class="wrap">
     <header class="site-header">
-      <a class="site-title" href="/">{{ site.title }}</a>
+      <a class="logo" href="/">
+        <span class="logo-name">Bennett<img src="/assets/charon/charon-idle.png" alt="&amp;" width="312" height="468">Lennett</span>
+        <span class="logo-tagline">making <span class="game">{{ site.game }}</span>, a point-and-click adventure</span>
+      </a>
       <nav aria-label="Main">
         <a href="/"{% if page.url == "/" %} aria-current="page"{% endif %}>Look at posts</a>
         <a href="/ai/"{% if page.url == "/ai/" %} aria-current="page"{% endif %}>Ask about AI</a>

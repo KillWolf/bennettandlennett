@@ -66,19 +66,37 @@ h2.quiet { font-family: var(--display); font-size: 24px; }
 .site-header {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 12px 24px;
 }
-.site-title {
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: 30px;
-  line-height: 1.1;
-  color: var(--lamp);
+.logo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   text-decoration: none;
 }
-.site-header nav { display: flex; flex-wrap: wrap; gap: 4px 24px; }
+.logo-name {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.27em;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 52px;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+/* Charon stands in for the ampersand, sized with the text. */
+.logo-name img {
+  display: block;
+  width: auto;
+  height: 1.35em;
+  margin-bottom: -0.08em;
+  image-rendering: pixelated;
+}
+.logo-tagline { font-size: 24px; color: var(--quiet); }
+.logo-tagline .game { color: var(--lamp); }
+.site-header nav { display: flex; flex-wrap: wrap; gap: 4px 24px; padding-top: 14px; }
 .site-header nav a { text-decoration: none; padding: 8px 0; }
 .site-header nav a[aria-current="page"] { color: var(--lamp); }
 
@@ -158,4 +176,6 @@ main { display: flex; flex-direction: column; gap: 40px; }
 @media (max-width: 600px) {
   .scene { padding: 24px 16px 0; min-height: 0; }
   h1 { font-size: 34px; }
+  .logo-name { font-size: 34px; }
+  .logo-tagline { font-size: 20px; }
 }
