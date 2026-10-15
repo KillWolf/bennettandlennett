@@ -5,8 +5,16 @@ layout: base.njk
 {% set newest = posts[0] %}
 
 <section class="scene" aria-label="Erik">
-  <p class="dialogue">“{{ site.erikLine }}”</p>
-  <img id="erik" class="sprite" src="/assets/erik/erik-idle.png" alt="Erik" width="272" height="464">
+  <p class="dialogue" id="erik-says" aria-live="polite"><span class="hint">Click Erik.</span></p>
+  <div class="erik">
+    <button type="button" class="erik-button" id="erik-button" aria-label="Erik" aria-haspopup="menu" aria-expanded="false" aria-controls="erik-menu">
+      <img id="erik" class="sprite" src="/assets/erik/erik-idle.png" alt="" width="272" height="464">
+    </button>
+    <div class="verb-menu" id="erik-menu" role="menu" aria-label="What to do with Erik" hidden>
+      <button type="button" role="menuitem" data-verb="lookAt">Look at</button>
+      <button type="button" role="menuitem" data-verb="talkTo">Talk to</button>
+    </div>
+  </div>
 </section>
 
 {% if newest %}
@@ -49,5 +57,79 @@ layout: base.njk
     img.src = "/assets/erik/" + pose[0];
     img.width = pose[1];
     img.height = pose[2];
+  })();
+
+  // Click Erik for a game-style verb menu: Look at / Talk to.
+  (function () {
+    var lines = {{ site.erik | dump | safe }};
+    var wrap = document.querySelector(".erik");
+    var button = document.getElementById("erik-button");
+    var menu = document.getElementById("erik-menu");
+    var says = document.getElementById("erik-says");
+    var items = Array.prototype.slice.call(menu.querySelectorAll("[role=menuitem]"));
+    var lastLine = {};
+
+    function pick(verb) {
+      var options = lines[verb];
+      var line;
+      do {
+        line = options[Math.floor(Math.random() * options.length)];
+      } while (options.length > 1 && line === lastLine[verb]);
+      lastLine[verb] = line;
+      return line;
+    }
+
+    function open(x, y) {
+      menu.hidden = false;
+      // Keep the menu inside Erik's area.
+      var maxX = wrap.clientWidth - menu.offsetWidth;
+      var maxY = wrap.clientHeight - menu.offsetHeight;
+      menu.style.left = Math.max(0, Math.min(x, maxX)) + "px";
+      menu.style.top = Math.max(0, Math.min(y, maxY)) + "px";
+      button.setAttribute("aria-expanded", "true");
+      items[0].focus();
+    }
+
+    function close(refocus) {
+      if (menu.hidden) return;
+      menu.hidden = true;
+      button.setAttribute("aria-expanded", "false");
+      if (refocus) button.focus();
+    }
+
+    button.addEventListener("click", function (event) {
+      if (!menu.hidden) return close(true);
+      var box = wrap.getBoundingClientRect();
+      // A mouse click opens the menu where you clicked; a keypress opens it on his chest.
+      var fromPointer = event.detail > 0;
+      open(
+        fromPointer ? event.clientX - box.left : box.width * 0.3,
+        fromPointer ? event.clientY - box.top : box.height * 0.35
+      );
+    });
+
+    items.forEach(function (item, i) {
+      item.addEventListener("click", function () {
+        var verb = item.getAttribute("data-verb");
+        var line = pick(verb);
+        says.className = "dialogue" + (verb === "lookAt" ? " is-narration" : "");
+        says.textContent = verb === "talkTo" ? "“" + line + "”" : line;
+        close(true);
+      });
+      item.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+          event.preventDefault();
+          var step = event.key === "ArrowDown" ? 1 : -1;
+          items[(i + step + items.length) % items.length].focus();
+        }
+      });
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") close(true);
+    });
+    document.addEventListener("click", function (event) {
+      if (!wrap.contains(event.target)) close(false);
+    });
   })();
 </script>

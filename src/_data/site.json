@@ -3,6 +3,17 @@
   "url": "https://bennettandlennett.eu",
   "game": "Hemmeligheden på Fyns Hoved",
   "description": "Dev log from Bennett & Lennett, making Hemmeligheden på Fyns Hoved, a comedic point-and-click adventure set on Fyns Hoved in Denmark.",
-  "erikLine": "Jeg er lige ved at hente Jola, før jeg tager afsted.",
+  "erik": {
+    "lookAt": [
+      "My hat is a bit tight, I know.",
+      "A sweater made for a seaman, got it on one of my adventures.. into town.",
+      "The wheels are squeaks when I walk, but it's my signature sound."
+    ],
+    "talkTo": [
+      "No time to talk, I am going to get Jola.",
+      "Eh, uninterersted.",
+      "Do you have my Jola?"
+    ]
+  },
   "erikAiLine": "Urgh, ikke AI."
 }
