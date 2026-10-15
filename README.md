@@ -32,6 +32,8 @@ The newest post is featured on the home page; the rest are listed below it. The 
 | Site title, address (`url`), Erik's lines | `src/_data/site.json` (`erik.lookAt` and `erik.talkTo` are the lines for clicking Erik; add as many as you like) |
 | Sitemap, robots.txt | `src/sitemap.njk`, `src/robots.njk` |
 | Favicon, share image | `src/favicon.ico`, `src/assets/icons/` |
+| Erik's scripts (verb menu, walking) | `src/assets/js/` |
+| Security headers | `src/_headers` (the policy only allows scripts, styles, fonts and images from this site, so keep JavaScript in `src/assets/js/` rather than inside pages) |
 | Home page | `src/index.njk` |
 | AI page | `src/ai.njk` |
 | Page and post layouts | `src/_includes/` |
