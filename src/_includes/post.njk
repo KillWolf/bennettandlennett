@@ -9,3 +9,61 @@ layout: base.njk
   {{ content | safe }}
 </article>
 <p><a class="action" href="/">&lt; Back to all posts</a></p>
+
+<img class="walker" id="walker" src="/assets/erik/walk/front-idle.png" alt="" aria-hidden="true" width="144" height="236">
+
+<script>
+  // Erik walks down the right side as you scroll: towards you going down, away going up.
+  (function () {
+    var walker = document.getElementById("walker");
+    var base = "/assets/erik/walk/";
+    var frames = 8;
+    var stride = 45; // pixels scrolled per animation frame
+    var still = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var facing = "front";
+    var lastY = window.scrollY;
+    var travelled = 0;
+    var stopTimer;
+
+    // Load every frame up front so he doesn't flicker mid-step.
+    ["front", "back"].forEach(function (side) {
+      for (var i = 1; i <= frames; i++) new Image().src = base + side + "-" + i + ".png";
+      new Image().src = base + side + "-idle.png";
+    });
+
+    function place() {
+      var room = document.documentElement.scrollHeight - window.innerHeight;
+      var progress = room > 0 ? window.scrollY / room : 0;
+      var top = 24 + progress * (window.innerHeight - walker.offsetHeight - 48);
+      walker.style.transform = "translateY(" + Math.round(top) + "px)";
+    }
+
+    function onScroll() {
+      var y = window.scrollY;
+      var delta = y - lastY;
+      lastY = y;
+      if (delta !== 0) facing = delta > 0 ? "front" : "back";
+      // Half size: front frames are 288×472, back frames 296×444.
+      walker.width = facing === "front" ? 144 : 148;
+      walker.height = facing === "front" ? 236 : 222;
+      place();
+
+      if (still.matches) {
+        walker.src = base + facing + "-idle.png";
+        return;
+      }
+      travelled += Math.abs(delta);
+      walker.src = base + facing + "-" + (Math.floor(travelled / stride) % frames + 1) + ".png";
+
+      clearTimeout(stopTimer);
+      stopTimer = setTimeout(function () {
+        walker.src = base + facing + "-idle.png";
+      }, 180);
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", place);
+    walker.addEventListener("load", place, { once: true });
+    place();
+  })();
+</script>

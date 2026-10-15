@@ -206,6 +206,21 @@ main { display: flex; flex-direction: column; gap: 40px; }
 .card li, .rules li { margin-bottom: 6px; }
 .rules { max-width: 60ch; }
 
+/* Erik walking down the right-hand margin of a post */
+.walker {
+  display: none;
+  position: fixed;
+  top: 0;
+  /* Centred in the space to the right of the 960px column. */
+  right: calc((100vw - 960px) / 4 - 72px);
+  height: auto;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+@media (min-width: 1260px) {
+  .walker { display: block; }
+}
+
 .site-footer {
   border-top: 2px solid var(--rule);
   padding-top: 16px;
